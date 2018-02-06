@@ -2,31 +2,9 @@ package lab3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import lab3.Lab3Util;
 
 public class Lab3Task1 {
-	
-	public static void print2DList(ArrayList<ArrayList<Integer>> grid) {
-		for (ArrayList<Integer> row: grid) {
-			for (Integer num: row) {
-				// https://stackoverflow.com/a/391978/1198896
-				System.out.print(String.format("%1$-4s", num.toString()));
-				System.out.print(' ');
-			}
-			System.out.println();
-		}
-	}
-	
-	public static void print2DArray(Integer[][] grid) {
-		for (Integer[] row: grid) {
-			for (Integer num: row) {
-				// https://stackoverflow.com/a/391978/1198896
-				System.out.print(String.format("%1$-4s", num.toString()));
-				System.out.print(' ');
-			}
-			System.out.println();
-		}
-	}
-
 	public static void main(String[] args) {
 		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(1,2000,30,400));
 		ArrayList<ArrayList<Integer>> finalList = new ArrayList<ArrayList<Integer>>();
@@ -35,7 +13,7 @@ public class Lab3Task1 {
 		finalList.add(2, list);
 		finalList.add(3, list);
 		
-		print2DList(finalList);
+		Lab3Util.print2DList(finalList);
 		
 		Integer[][] finalArray = {
 				{10, 15, 30, 40},
@@ -46,7 +24,7 @@ public class Lab3Task1 {
 		
 		System.out.println();
 
-		print2DArray(finalArray);
+		Lab3Util.print2DArray(finalArray);
 	}
 
 }
