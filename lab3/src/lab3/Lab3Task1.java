@@ -3,7 +3,7 @@ package lab3;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Lab3Task2 {
+public class Lab3Task1 {
 	
 	public static void print2DList(ArrayList<ArrayList<Integer>> grid) {
 		for (ArrayList<Integer> row: grid) {
