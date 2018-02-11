@@ -40,7 +40,20 @@ public class Lab3Task2 {
 			// This is more brittle than the rest because it assumes 4x4.
 			// That's in the spec though so it's fine for me to not bother.
 			// Which is good, because I can't be bothered to make it flexible.
-			// TODO
+			//
+			// For every column, starting at the left...
+			for (int i = 0; i < 4; i++) {
+				int lastNum = 0;
+				// ...and for every row, starting at the bottom...
+				for (int j = 3; j >= 0; j--) {
+					// Add the previous number
+					//
+					// Note that i and j are ordered in a different way than
+					// you'd usually expect.
+					arr[j][i] += lastNum;
+					lastNum = arr[j][i];
+				}
+			}
 			break;
 		case 4:
 			// Down
@@ -61,7 +74,7 @@ public class Lab3Task2 {
 				{1, 4, 5, 0}
 		};
 		
-		runningSum2DArray(arr, 2);
+		runningSum2DArray(arr, 3);
 	}
 
 }
