@@ -57,7 +57,23 @@ public class Lab3Task2 {
 			break;
 		case 4:
 			// Down
-			// TODO
+			//
+			// See the remarks above about 4x4 assumptions.
+			// TODO refactor this to share code with the up direction
+
+			// For every column, starting at the left...
+			for (int i = 0; i < 4; i++) {
+				int lastNum = 0;
+				// ...and for every row, starting at the top...
+				for (int j = 0; j <= 3; j++) {
+					// Add the previous number
+					//
+					// Note that i and j are ordered in a different way than
+					// you'd usually expect.
+					arr[j][i] += lastNum;
+					lastNum = arr[j][i];
+				}
+			}
 			break;
 		default:
 			throw new Error("Invalid direction integer provided");
@@ -74,7 +90,7 @@ public class Lab3Task2 {
 				{1, 4, 5, 0}
 		};
 		
-		runningSum2DArray(arr, 3);
+		runningSum2DArray(arr, 4);
 	}
 
 }
