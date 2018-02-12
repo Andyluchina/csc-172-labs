@@ -4,7 +4,7 @@ This project contains tasks 1, 2, and 3 for CSC 172 lab 3, which is about nested
 
 Everything here is pretty standard except for the fact that tasks 1 and 2 share some code, which is shared in the `Lab3Util` module in `Lab3Util.java`. This module is imported through the usual Java way in both these tasks.
 
-In order to modify the data in the array, or the mode of operation (for task 2), you are expected to modify the source code.
+In order to modify the data in the array, or the mode of operation (for tasks 2 and 3), you are expected to modify the source code.
 
 ## Git
 
