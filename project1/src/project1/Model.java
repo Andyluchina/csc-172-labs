@@ -25,8 +25,39 @@ public class Model {
 	// I suspect not without decent first-class functions, but maybe...
 
 	public static boolean _moveUp() {
-		// TODO
-		return false;
+		boolean moved = false;
+
+		// Counterintuitively, we start on top row and "reach" down
+		for (int i = 0; i <= 2; i++) {
+			Integer[] pullFrom = grid[i+1];
+			Integer[] pullTo = grid[i];
+
+			for (int j = 0; j <= 3; j++) {
+				if (pullTo[j] == 0 && pullFrom[j] == 0) {
+					continue;
+				} else if (pullTo[j] == 0 && pullFrom[j] != 0) {
+					// Pull unconditionally
+					pullTo[j] = pullFrom[j];
+					pullFrom[j] = 0;
+					moved = true;
+				} else if (pullTo[j] == pullFrom[j]) {
+					// Add them
+					pullTo[j] += pullFrom[j];
+					pullFrom[j] = 0;
+					moved = true;
+				}
+			}
+		}
+
+		// Keep recursing as long as we moved things
+		if (moved) {
+			_moveUp();
+		}
+
+		// See the remarks in the bottom of _moveDown() about the caller
+		// getting `moved`.
+
+		return moved;
 	}
 
 	// Stub method that helps us add a tile only once given the recursion
