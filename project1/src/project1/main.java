@@ -1,7 +1,5 @@
 package project1;
 
-import com.sun.scenario.effect.Blend.Mode;
-
 import project1.Model;
 import project1.View;
 
