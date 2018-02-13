@@ -21,9 +21,19 @@ public class Model {
 	
 	private static Random random = new Random();
 
-	public static boolean moveUp() {
+	// XXX can we refactor all these dumb stubs?
+	// I suspect not without decent first-class functions, but maybe...
+
+	public static boolean _moveUp() {
 		// TODO
 		return false;
+	}
+
+	// Stub method that helps us add a tile only once given the recursion
+	public static void moveUp() {
+		if (_moveUp()) {
+			addRandomNumber();
+		}
 	}
 
 	private static boolean _moveDown() {
@@ -74,14 +84,28 @@ public class Model {
 		}
 	}
 
-	public static boolean moveLeft() {
+	public static boolean _moveLeft() {
 		// TODO
 		return false;
 	}
 
-	public static boolean moveRight() {
+	// Stub method that helps us add a tile only once given the recursion
+	public static void moveLeft() {
+		if (_moveLeft()) {
+			addRandomNumber();
+		}
+	}
+
+	public static boolean _moveRight() {
 		// TODO
 		return false;
+	}
+
+	// Stub method that helps us add a tile only once given the recursion
+	public static void moveRight() {
+		if (_moveRight()) {
+			addRandomNumber();
+		}
 	}
 
 	public static void addRandomNumber() {
@@ -113,6 +137,9 @@ public class Model {
 			Arrays.fill(arr, 0);
 		}
 
+		// XXX this is for testing, but it would be unnecessary if methods
+		// were functional...
+		//grid[3][0] = 2;grid[2][0]=4;
 		addRandomNumber();
 		addRandomNumber();
 	}
