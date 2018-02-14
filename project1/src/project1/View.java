@@ -20,8 +20,12 @@ public class View {
 		for (Integer[] row: grid) {
 			System.out.print("│");
 			for (Integer num: row) {
-				// https://stackoverflow.com/a/391978/1198896
-				System.out.print(String.format("%1$-4s", num.toString()));
+				if (num == 0) {
+					System.out.print("*   ");
+				} else {
+					// https://stackoverflow.com/a/391978/1198896
+					System.out.print(String.format("%1$-4s", num.toString()));
+				}
 				System.out.print(' ');
 				System.out.print('│');
 			}
