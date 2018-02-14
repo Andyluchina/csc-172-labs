@@ -129,7 +129,37 @@ public class Model {
 
 	public static boolean _moveRight() {
 		// TODO
-		return false;
+		boolean moved = false;
+
+		// x
+		for (int i = 3; i > 0; i--) {
+			// y
+			for (int j = 0; j <= 3; j++) {
+				if (grid[j][i] == 0 && grid[j][i-1] == 0) {
+					continue;
+				} else if (grid[j][i] == 0 && grid[j][i-1] != 0) {
+					// Pull unconditionally
+					grid[j][i] = grid[j][i-1];
+					grid[j][i-1] = 0;
+					moved = true;
+				} else if (grid[j][i] == grid[j][i-1]) {
+					// Add them
+					grid[j][i] += grid[j][i-1];
+					grid[j][i-1] = 0;
+					moved = true;
+				}
+			}
+		}
+
+		// Keep recursing as long as we moved things
+		if (moved) {
+			_moveRight();
+		}
+
+		// See the remarks in the bottom of _moveDown() about the caller
+		// getting `moved`.
+
+		return moved;
 	}
 
 	// Stub method that helps us add a tile only once given the recursion
@@ -170,7 +200,7 @@ public class Model {
 
 		// XXX this is for testing, but it would be unnecessary if methods
 		// were functional...
-		//grid[3][0] = 2;grid[2][0]=4;
+		//grid[2][0] = 2;grid[2][1]=4;
 		addRandomNumber();
 		addRandomNumber();
 	}
