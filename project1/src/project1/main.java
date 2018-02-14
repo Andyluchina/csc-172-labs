@@ -69,6 +69,7 @@ public class main {
 						Model.init();
 					}
 				} else {
+					gameInProgress = true;
 					Model.init();
 				}
 				break;
