@@ -19,7 +19,6 @@ Run `main.java`.
 
 ## Bugs
 
-* You can still move after you've won
 * The design is not documented
 * The algorithm to place a random number is horribly inefficient
 * Unit tests are missing

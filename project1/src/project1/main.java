@@ -41,16 +41,16 @@ public class main {
 			lastKeyPressed = c;
 			switch (c) {
 			case 'w':
-				Model.moveUp();
+				if (gameInProgress) Model.moveUp();
 				break;
 			case 'a':
-				Model.moveLeft();
+				if (gameInProgress) Model.moveLeft();
 				break;
 			case 's':
-				Model.moveDown();
+				if (gameInProgress) Model.moveDown();
 				break;
 			case 'd':
-				Model.moveRight();
+				if (gameInProgress) Model.moveRight();
 				break;
 			case 'q':
 				if (gameInProgress) {
