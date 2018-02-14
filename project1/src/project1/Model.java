@@ -24,7 +24,7 @@ public class Model {
 	// XXX can we refactor all these dumb stubs?
 	// I suspect not without decent first-class functions, but maybe...
 
-	public static boolean _moveUp() {
+	private static boolean _moveUp() {
 		boolean moved = false;
 
 		// Counterintuitively, we start on top row and "reach" down
@@ -115,7 +115,7 @@ public class Model {
 		}
 	}
 
-	public static boolean _moveLeft() {
+	private static boolean _moveLeft() {
 		boolean moved = false;
 
 		// x
@@ -156,7 +156,7 @@ public class Model {
 		}
 	}
 
-	public static boolean _moveRight() {
+	private static boolean _moveRight() {
 		boolean moved = false;
 
 		// x
