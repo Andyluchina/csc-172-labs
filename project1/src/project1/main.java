@@ -49,8 +49,16 @@ public class main {
 				Model.moveRight();
 				break;
 			case 'q':
+				System.out.print("are you sure? (y/n) ");
+				if (scanner.next().charAt(0) == 'y') {
+					System.exit(0);
+				}
 				break;
 			case 'r':
+				System.out.print("are you sure? (y/n) ");
+				if (scanner.next().charAt(0) == 'y') {
+					Model.init();
+				}
 				break;
 			}
 
