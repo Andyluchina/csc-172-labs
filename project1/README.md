@@ -23,9 +23,9 @@ Run `Controller.java`.
 
 The design of this program is roughly modeled after the [Model-View-Controller](https://en.wikipedia.org/wiki/Model-view-controller) pattern. The model handles the data modelling concerns, including updating everything, the view just renders out the board to screen (in a [functional](https://en.wikipedia.org/wiki/Side_effect_(computer_science)) fashion), and the controller is responsible for taking user input, updating the model accordingly, and triggering a view render.
 
-Note also that there are virtually no object instantiations in this codebase. This is because I really dislike Java-style object-oriented programming, as I have found that it tends to be overly verbose as well as encouraging overengineering and [architecture astronauting](https://www.joelonsoftware.com/2001/04/21/dont-let-architecture-astronauts-scare-you/). If you're interested, [this page](http://harmful.cat-v.org/software/OO_programming/) does a pretty good job summarizing my dislike of OOP, although its descriptions can be dicey at times.
+Note also that there are virtually no object instantiations in this codebase. This is because I dislike Java-style object-oriented programming, as I have found that in practice it tends to encourage overengineering and [architecture astronauting](https://www.joelonsoftware.com/2001/04/21/dont-let-architecture-astronauts-scare-you/). If you're interested, [this page](http://harmful.cat-v.org/software/OO_programming/) matches my thoughts pretty well, although its descriptions can be dicey at times.
 
-Honestly, I've probably overcorrected, but what remains here is the absolute bare minimum to get 2048 working. Why not add a bunch of class hierarchies with fancy methods? You Aren't Gonna Need It (YAGNI), and frankly, life is too short. Jeff Atwood, founder of Stack Overflow, does a great job explaining YAGNI [in his blog](https://blog.codinghorror.com/kiss-and-yagni/).
+Honestly, I've probably overcorrected, but what remains here is the absolute bare minimum to get 2048 working. Why not add a bunch of class hierarchies with fancy methods? You Aren't Gonna Need It (YAGNI)! Jeff Atwood, founder of Stack Overflow, does a great job explaining YAGNI [in his blog](https://blog.codinghorror.com/kiss-and-yagni/). Plus, life is too short.
 
 ## Bugs
 
