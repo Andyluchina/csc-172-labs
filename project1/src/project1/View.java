@@ -11,6 +11,18 @@ public class View {
 		System.out.println(FIFTY_NEWLINES);
 	}
 
+	private static int findMaxNumber(Integer[][] grid) {
+		int max = 0;
+
+		for (Integer[] row: grid) {
+			for (int num: row) {
+				if (num > max) max = num;
+			}
+		}
+
+		return max;
+	}
+
 	// Copied from lab 3 util; lightly modified
 	public static void render(Integer[][] grid, char lastKeyPressed) {
 		clear();
@@ -36,6 +48,10 @@ public class View {
 			}
 		}
 		System.out.println("└─────┴─────┴─────┴─────┘");
+		System.out.print("moves made:");
+		System.out.print("");
+		System.out.print(", max number: ");
+		System.out.println(findMaxNumber(grid));
 		System.out.println("keys: (w), (a), (s), (d),");
 		System.out.println("      (r)estart, (q)uit");
 		System.out.print("last key pressed: ");
