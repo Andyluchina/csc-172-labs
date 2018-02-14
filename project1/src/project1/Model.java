@@ -18,7 +18,13 @@ public class Model {
 	public static Integer[][] getGrid() {
 		return grid;
 	}
-	
+
+	// Ditto
+	private static int movesMade = 0;
+	public static int getMovesMade() {
+		return movesMade;
+	}
+
 	private static Random random = new Random();
 
 	// XXX can we refactor all these dumb stubs?
@@ -64,6 +70,7 @@ public class Model {
 	public static void moveUp() {
 		if (_moveUp()) {
 			addRandomNumber();
+			movesMade++;
 		}
 	}
 
@@ -112,6 +119,7 @@ public class Model {
 	public static void moveDown() {
 		if (_moveDown()) {
 			addRandomNumber();
+			movesMade++;
 		}
 	}
 
@@ -153,6 +161,7 @@ public class Model {
 	public static void moveLeft() {
 		if (_moveLeft()) {
 			addRandomNumber();
+			movesMade++;
 		}
 	}
 
@@ -194,6 +203,7 @@ public class Model {
 	public static void moveRight() {
 		if (_moveRight()) {
 			addRandomNumber();
+			movesMade++;
 		}
 	}
 
@@ -225,6 +235,8 @@ public class Model {
 		for (Integer[] arr: grid) {
 			Arrays.fill(arr, 0);
 		}
+
+		movesMade = 0;
 
 		// XXX this is for testing, but it would be unnecessary if methods
 		// were functional...

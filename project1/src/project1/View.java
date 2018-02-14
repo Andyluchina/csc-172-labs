@@ -24,7 +24,7 @@ public class View {
 	}
 
 	// Copied from lab 3 util; lightly modified
-	public static void render(Integer[][] grid, char lastKeyPressed) {
+	public static void render(Integer[][] grid, int movesMade, char lastKeyPressed) {
 		clear();
 
 		int middleLinesPrinted = 0;
@@ -48,8 +48,8 @@ public class View {
 			}
 		}
 		System.out.println("└─────┴─────┴─────┴─────┘");
-		System.out.print("moves made:");
-		System.out.print("");
+		System.out.print("moves made: ");
+		System.out.print(movesMade);
 		System.out.print(", max number: ");
 		System.out.println(findMaxNumber(grid));
 		System.out.println("keys: (w), (a), (s), (d),");

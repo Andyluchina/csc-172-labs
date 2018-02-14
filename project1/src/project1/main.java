@@ -9,7 +9,7 @@ public class main {
 
 	public static void main(String[] args) {
 		Model.init();
-		View.render(Model.getGrid(), lastKeyPressed);
+		View.render(Model.getGrid(), Model.getMovesMade(), lastKeyPressed);
 		boolean gameInProgress = true;
 
 		/*
@@ -54,7 +54,7 @@ public class main {
 				break;
 			}
 
-			View.render(Model.getGrid(), lastKeyPressed);
+			View.render(Model.getGrid(), Model.getMovesMade(), lastKeyPressed);
 		}
 	}
 
