@@ -263,7 +263,7 @@ public class Model {
 		}
 
 		int candidate;
-		if (random.nextBoolean()) {
+		if (random.nextFloat() < 0.8) {
 			candidate = 2;
 		} else {
 			candidate = 4;
