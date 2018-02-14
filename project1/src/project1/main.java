@@ -9,7 +9,7 @@ public class main {
 
 	public static void main(String[] args) throws Exception {
 		Model.init();
-		View.render(Model.getGrid(), Model.getMovesMade(), Model.getMoveStatus(), lastKeyPressed);
+		View.render(Model.getGameState(), Model.getGrid(), Model.getMovesMade(), Model.getMoveStatus(), lastKeyPressed);
 		boolean gameInProgress = true;
 
 		/*
@@ -31,7 +31,11 @@ public class main {
 		Scanner scanner = new Scanner(System.in);
 
 		// Poor man's event loop
-		while (gameInProgress) {
+		while (true) {
+			if (Model.getGameState() != "in_progress") {
+				gameInProgress = false;
+			}
+
 			// https://stackoverflow.com/a/13942707/1198896
 			char c = scanner.next().charAt(0);
 			lastKeyPressed = c;
@@ -49,20 +53,28 @@ public class main {
 				Model.moveRight();
 				break;
 			case 'q':
-				System.out.print("are you sure? (y/n) ");
-				if (scanner.next().charAt(0) == 'y') {
+				if (gameInProgress) {
+					System.out.print("are you sure? (y/n) ");
+					if (scanner.next().charAt(0) == 'y') {
+						System.exit(0);
+					}
+				} else {
 					System.exit(0);
 				}
 				break;
 			case 'r':
-				System.out.print("are you sure? (y/n) ");
-				if (scanner.next().charAt(0) == 'y') {
+				if (gameInProgress) {
+					System.out.print("are you sure? (y/n) ");
+					if (scanner.next().charAt(0) == 'y') {
+						Model.init();
+					}
+				} else {
 					Model.init();
 				}
 				break;
 			}
 
-			View.render(Model.getGrid(), Model.getMovesMade(), Model.getMoveStatus(), lastKeyPressed);
+			View.render(Model.getGameState(), Model.getGrid(), Model.getMovesMade(), Model.getMoveStatus(), lastKeyPressed);
 		}
 	}
 

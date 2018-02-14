@@ -10,7 +10,7 @@ Run `main.java`.
 
 * Interactive console display with [wasd] control keys
 * Fancy Unicode game board output
-* Supports quitting and restarting with `q` and `r` keys, respectively
+* Supports quitting and restarting with `q` and `r` keys, respectively (with prompts, unless the game has been won or lost)
 * Last key pressed and move validity information display
 * Move count display
 * Maximum number on board display
@@ -19,8 +19,7 @@ Run `main.java`.
 
 ## Bugs
 
-* You can't win
-* You can't lose
+* You can still move after you've won
 * The design is not documented
 * The algorithm to place a random number is horribly inefficient
 * Unit tests are missing

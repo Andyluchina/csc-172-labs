@@ -60,7 +60,7 @@ public class Model {
 					pullTo[j] = pullFrom[j];
 					pullFrom[j] = 0;
 					moved = true;
-				} else if (pullTo[j] == pullFrom[j]) {
+				} else if (pullTo[j].equals(pullFrom[j])) {
 					// Add them
 					pullTo[j] += pullFrom[j];
 					pullFrom[j] = 0;
@@ -81,9 +81,9 @@ public class Model {
 	}
 
 	// Stub method that helps us add a tile only once given the recursion
-	public static void moveUp() {
+	public static void moveUp() throws Exception {
 		if (_moveUp()) {
-			addRandomNumber();
+			if (getGameState() == "in_progress") addRandomNumber();
 			movesMade++;
 			moveStatus = "valid";
 		} else {
@@ -107,7 +107,7 @@ public class Model {
 					pullTo[j] = pullFrom[j];
 					pullFrom[j] = 0;
 					moved = true;
-				} else if (pullTo[j] == pullFrom[j]) {
+				} else if (pullTo[j].equals(pullFrom[j])) {
 					// Add them
 					pullTo[j] += pullFrom[j];
 					pullFrom[j] = 0;
@@ -133,9 +133,9 @@ public class Model {
 	}
 
 	// Stub method that helps us add a tile only once given the recursion
-	public static void moveDown() {
+	public static void moveDown() throws Exception {
 		if (_moveDown()) {
-			addRandomNumber();
+			if (getGameState() == "in_progress") addRandomNumber();
 			movesMade++;
 			moveStatus = "valid";
 		} else {
@@ -157,7 +157,7 @@ public class Model {
 					grid[j][i] = grid[j][i+1];
 					grid[j][i+1] = 0;
 					moved = true;
-				} else if (grid[j][i] == grid[j][i+1]) {
+				} else if (grid[j][i].equals(grid[j][i+1])) {
 					// Add them
 					grid[j][i] += grid[j][i+1];
 					grid[j][i+1] = 0;
@@ -178,9 +178,9 @@ public class Model {
 	}
 
 	// Stub method that helps us add a tile only once given the recursion
-	public static void moveLeft() {
+	public static void moveLeft() throws Exception {
 		if (_moveLeft()) {
-			addRandomNumber();
+			if (getGameState() == "in_progress") addRandomNumber();
 			movesMade++;
 			moveStatus = "valid";
 		} else {
@@ -202,7 +202,7 @@ public class Model {
 					grid[j][i] = grid[j][i-1];
 					grid[j][i-1] = 0;
 					moved = true;
-				} else if (grid[j][i] == grid[j][i-1]) {
+				} else if (grid[j][i].equals(grid[j][i-1])) {
 					// Add them
 					grid[j][i] += grid[j][i-1];
 					grid[j][i-1] = 0;
@@ -223,9 +223,9 @@ public class Model {
 	}
 
 	// Stub method that helps us add a tile only once given the recursion
-	public static void moveRight() {
+	public static void moveRight() throws Exception {
 		if (_moveRight()) {
-			addRandomNumber();
+			if (getGameState() == "in_progress") addRandomNumber();
 			movesMade++;
 			moveStatus = "valid";
 		} else {
@@ -234,11 +234,33 @@ public class Model {
 	}
 
 	/*
-	 * addRandomNumber() METHOD
+	 * UTILITY METHODS
 	 */
 
-	public static void addRandomNumber() {
-		// Note: it's not safe to call this if the board is full
+	private static boolean boardHasNumber(int nnum) {
+		for (Integer[] row: grid) {
+			for (Integer num: row) {
+				if (num.equals(nnum)) return true;
+			}
+		}
+		return false;
+	}
+
+	// XXX enum
+	public static String getGameState() {
+		if (boardHasNumber(2048)) {
+			return "won";
+		} else if (!boardHasNumber(0)) {
+			return "lost";
+		} else {
+			return "in_progress";
+		}
+	}
+
+	public static void addRandomNumber() throws Exception {
+		if (getGameState() != "in_progress") {
+			throw new Exception("addRandomNumber() called but game is not in progress");
+		}
 
 		int candidate;
 		if (random.nextBoolean()) {
@@ -263,7 +285,7 @@ public class Model {
 	 * BOARD INIT
 	 */
 
-	public static void init() {
+	public static void init() throws Exception {
 		grid = new Integer[4][4];
 
 		for (Integer[] arr: grid) {
@@ -275,8 +297,8 @@ public class Model {
 
 		// XXX this is for testing, but it would be unnecessary if methods
 		// were functional...
-		//grid[2][0] = 2;grid[2][1]=4;
-		addRandomNumber();
-		addRandomNumber();
+		grid[2][0] = 1024;grid[2][1]=1024;
+		//addRandomNumber();
+		//addRandomNumber();
 	}
 }
