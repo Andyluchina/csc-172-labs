@@ -13,6 +13,10 @@ import java.util.Random;
 import java.util.Arrays;
 
 public class Model {
+	/*
+	 * MODULE-WIDE PROPERTIES
+	 */
+
 	// This prop is read-only to outside observers
 	private static Integer[][] grid;
 	public static Integer[][] getGrid() {
@@ -32,6 +36,10 @@ public class Model {
 	}
 
 	private static Random random = new Random();
+
+	/*
+	 * MOVEMENT UTILITIES
+	 */
 
 	// XXX can we refactor all these dumb stubs?
 	// I suspect not without decent first-class functions, but maybe...
@@ -225,6 +233,10 @@ public class Model {
 		}
 	}
 
+	/*
+	 * addRandomNumber() METHOD
+	 */
+
 	public static void addRandomNumber() {
 		// Note: it's not safe to call this if the board is full
 
@@ -246,7 +258,11 @@ public class Model {
 			}
 		}
 	}
-	
+
+	/*
+	 * BOARD INIT
+	 */
+
 	public static void init() {
 		grid = new Integer[4][4];
 
