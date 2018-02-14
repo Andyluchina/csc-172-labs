@@ -4,7 +4,7 @@ import java.util.Scanner;
 import project1.Model;
 import project1.View;
 
-public class main {
+public class Controller {
 	public static char lastKeyPressed = ' ';
 
 	public static void main(String[] args) throws Exception {

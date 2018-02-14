@@ -6,7 +6,7 @@ This project contains an implementation of project 1, the 2048 game.
 
 ## Running
 
-Run `main.java`.
+Run `Controller.java`.
 
 ## Features
 
