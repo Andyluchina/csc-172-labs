@@ -12,7 +12,7 @@ public class View {
 	}
 
 	// Copied from lab 3 util; lightly modified
-	public static void render(Integer[][] grid) {
+	public static void render(Integer[][] grid, char lastKeyPressed) {
 		clear();
 
 		int middleLinesPrinted = 0;
@@ -36,5 +36,10 @@ public class View {
 			}
 		}
 		System.out.println("└─────┴─────┴─────┴─────┘");
+		System.out.println("keys: (w), (a), (s), (d),");
+		System.out.println("      (r)estart, (q)uit");
+		System.out.print("last key pressed: ");
+		System.out.println(lastKeyPressed);
+		System.out.print("waiting for input: ");
 	}
 }

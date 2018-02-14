@@ -5,10 +5,11 @@ import project1.Model;
 import project1.View;
 
 public class main {
+	public static char lastKeyPressed = ' ';
 
 	public static void main(String[] args) {
 		Model.init();
-		View.render(Model.getGrid());
+		View.render(Model.getGrid(), lastKeyPressed);
 		boolean gameInProgress = true;
 
 		/*
@@ -33,6 +34,7 @@ public class main {
 		while (gameInProgress) {
 			// https://stackoverflow.com/a/13942707/1198896
 			char c = scanner.next().charAt(0);
+			lastKeyPressed = c;
 			switch (c) {
 			case 'w':
 				Model.moveUp();
@@ -52,7 +54,7 @@ public class main {
 				break;
 			}
 
-			View.render(Model.getGrid());
+			View.render(Model.getGrid(), lastKeyPressed);
 		}
 	}
 
