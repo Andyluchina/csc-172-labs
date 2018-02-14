@@ -25,6 +25,12 @@ public class Model {
 		return movesMade;
 	}
 
+	// Once more, with feeling
+	private static String moveStatus = "";
+	public static String getMoveStatus() {
+		return moveStatus;
+	}
+
 	private static Random random = new Random();
 
 	// XXX can we refactor all these dumb stubs?
@@ -71,6 +77,9 @@ public class Model {
 		if (_moveUp()) {
 			addRandomNumber();
 			movesMade++;
+			moveStatus = "valid";
+		} else {
+			moveStatus = "invalid";
 		}
 	}
 
@@ -120,6 +129,9 @@ public class Model {
 		if (_moveDown()) {
 			addRandomNumber();
 			movesMade++;
+			moveStatus = "valid";
+		} else {
+			moveStatus = "invalid";
 		}
 	}
 
@@ -162,6 +174,9 @@ public class Model {
 		if (_moveLeft()) {
 			addRandomNumber();
 			movesMade++;
+			moveStatus = "valid";
+		} else {
+			moveStatus = "invalid";
 		}
 	}
 
@@ -204,6 +219,9 @@ public class Model {
 		if (_moveRight()) {
 			addRandomNumber();
 			movesMade++;
+			moveStatus = "valid";
+		} else {
+			moveStatus = "invalid";
 		}
 	}
 
@@ -237,6 +255,7 @@ public class Model {
 		}
 
 		movesMade = 0;
+		moveStatus = "unknown";
 
 		// XXX this is for testing, but it would be unnecessary if methods
 		// were functional...

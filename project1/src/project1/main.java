@@ -7,9 +7,9 @@ import project1.View;
 public class main {
 	public static char lastKeyPressed = ' ';
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Model.init();
-		View.render(Model.getGrid(), Model.getMovesMade(), lastKeyPressed);
+		View.render(Model.getGrid(), Model.getMovesMade(), Model.getMoveStatus(), lastKeyPressed);
 		boolean gameInProgress = true;
 
 		/*
@@ -54,7 +54,7 @@ public class main {
 				break;
 			}
 
-			View.render(Model.getGrid(), Model.getMovesMade(), lastKeyPressed);
+			View.render(Model.getGrid(), Model.getMovesMade(), Model.getMoveStatus(), lastKeyPressed);
 		}
 	}
 
