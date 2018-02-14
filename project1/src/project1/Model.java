@@ -295,10 +295,7 @@ public class Model {
 		movesMade = 0;
 		moveStatus = "unknown";
 
-		// XXX this is for testing, but it would be unnecessary if methods
-		// were functional...
-		grid[2][0] = 1024;grid[2][1]=1024;
-		//addRandomNumber();
-		//addRandomNumber();
+		addRandomNumber();
+		addRandomNumber();
 	}
 }
