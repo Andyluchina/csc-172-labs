@@ -1,0 +1,131 @@
+ajord17@GLSN-9030-30 MINGW64 ~/csc-172-labs/lab4 (master)
+$ for prog in TwoSum TwoSumFast ThreeSum ThreeSumFast; do echo ===== Using $prog.java =====; for txtfile in 1Kints 2Kints 
+4Kints 8Ki                                                                                                                                           
+nts 16Kints 32Kints; do time java -classpath . $prog $txtfile.txt; done; done
+===== Using TwoSum.java =====
+      1     0.0   20180218_162114  tbiswas2  1Kints.txt
+
+real    0m0.227s
+user    0m0.000s
+sys     0m0.015s
+      2     0.0   20180218_162114  tbiswas2  2Kints.txt
+
+real    0m0.235s
+user    0m0.000s
+sys     0m0.000s
+      3     0.0   20180218_162115  tbiswas2  4Kints.txt
+
+real    0m0.270s
+user    0m0.000s
+sys     0m0.000s
+     19     0.1   20180218_162115  tbiswas2  8Kints.txt
+
+real    0m0.294s
+user    0m0.000s
+sys     0m0.015s
+     66     0.2   20180218_162115  tbiswas2  16Kints.txt
+
+real    0m0.465s
+user    0m0.000s
+sys     0m0.000s
+    273     0.5   20180218_162116  tbiswas2  32Kints.txt
+
+real    0m0.858s
+user    0m0.000s
+sys     0m0.000s
+===== Using TwoSumFast.java =====
+      1     0.0   20180218_162116  tbiswas2  1Kints.txt
+
+real    0m0.197s
+user    0m0.000s
+sys     0m0.000s
+      2     0.0   20180218_162117  tbiswas2  2Kints.txt
+
+real    0m0.213s
+user    0m0.000s
+sys     0m0.000s
+      3     0.0   20180218_162117  tbiswas2  4Kints.txt
+
+real    0m0.232s
+user    0m0.000s
+sys     0m0.015s
+     19     0.0   20180218_162117  tbiswas2  8Kints.txt
+
+real    0m0.266s
+user    0m0.000s
+sys     0m0.000s
+     66     0.0   20180218_162117  tbiswas2  16Kints.txt
+
+real    0m0.288s
+user    0m0.000s
+sys     0m0.000s
+    273     0.0   20180218_162118  tbiswas2  32Kints.txt
+
+real    0m0.373s
+user    0m0.000s
+sys     0m0.015s
+===== Using ThreeSum.java =====
+     70     0.2   20180218_162118  tbiswas2  1Kints.txt
+
+real    0m0.407s
+user    0m0.000s
+sys     0m0.015s
+    528     1.7   20180218_162120  tbiswas2  2Kints.txt
+
+real    0m1.955s
+user    0m0.000s
+sys     0m0.000s
+   4039    13.5   20180218_162134  tbiswas2  4Kints.txt
+
+real    0m13.752s
+user    0m0.000s
+sys     0m0.000s
+  32074    85.7   20180218_162300  tbiswas2  8Kints.txt
+
+real    1m25.929s
+user    0m0.000s
+sys     0m0.015s
+ 255181   676.4   20180218_163416  tbiswas2  16Kints.txt
+
+real    11m16.645s
+user    0m0.000s
+sys     0m0.000s
+2052358  5471.1   20180218_180528  tbiswas2  32Kints.txt
+
+real    91m11.420s
+user    0m0.000s
+sys     0m0.000s
+===== Using ThreeSumFast.java =====
+     70     0.1   20180218_180528  tbiswas2  1Kints.txt
+
+real    0m0.357s
+user    0m0.000s
+sys     0m0.000s
+    528     0.1   20180218_180529  tbiswas2  2Kints.txt
+
+real    0m0.315s
+user    0m0.000s
+sys     0m0.016s
+   4039     0.3   20180218_180529  tbiswas2  4Kints.txt
+
+real    0m0.499s
+user    0m0.000s
+sys     0m0.000s
+  32074     0.9   20180218_180530  tbiswas2  8Kints.txt
+
+real    0m1.150s
+user    0m0.000s
+sys     0m0.000s
+ 255181     3.7   20180218_180534  tbiswas2  16Kints.txt
+
+real    0m3.996s
+user    0m0.015s
+sys     0m0.000s
+2052358    15.0   20180218_180550  tbiswas2  32Kints.txt
+
+real    0m15.333s
+user    0m0.000s
+sys     0m0.000s
+
+ajord17@GLSN-9030-30 MINGW64 ~/csc-172-labs/lab4 (master)
+$
