@@ -57,23 +57,38 @@ public class TwoSumFast {
 		}
 	} 
 
+        // O(2n 2log(n)) => O(n log(n))
 	// return number of distinct pairs (i, j) such that a[i] + a[j] = 0
 	public static int count(int[] a) {
+                // O(1)
 		int n = a.length;
+                // It's unclear to me whether this is O(n log(n)) *all* the time. See https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html#sort(int[])
+                // O(n log(n))
 		Arrays.sort(a);
+                // O(n)
 		if (containsDuplicates(a)) throw new IllegalArgumentException("array contains duplicate integers");
+                // O(1)
 		int count = 0;
+                // Runtime is multiplied for this whole for block, giving us O(n log(n))
+                // O(n)
 		for (int i = 0; i < n; i++) {
+                        // O(log(n))
 			int j = Arrays.binarySearch(a, -a[i]);
+                        // O(1)
 			if (j > i) count++;
 		}
+                // O(1)
 		return count;
 	} 
 
+        // O(n)
 	// returns true if the sorted array a[] contains any duplicated integers
 	private static boolean containsDuplicates(int[] a) {
+                // O(n)
 		for (int i = 1; i < a.length; i++)
+                        // O(1)
 			if (a[i] == a[i-1]) return true;
+                // O(1)
 		return false;
 	}
 

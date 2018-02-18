@@ -59,6 +59,7 @@ public class ThreeSum {
         }
     } 
 
+    // O(n^3)
     /**
      * Returns the number of triples (i, j, k) with {@code i < j < k}
      * such that {@code a[i] + a[j] + a[k] == 0}.
@@ -68,17 +69,25 @@ public class ThreeSum {
      *         such that {@code a[i] + a[j] + a[k] == 0}
      */
     public static int count(int[] a) {
+        // O(1)
         int n = a.length;
+        // O(1)
         int count = 0;
+        // O(n)
         for (int i = 0; i < n; i++) {
+            // O(n/2) => O(n)
             for (int j = i+1; j < n; j++) {
+                // O(n/4) => O(n)
                 for (int k = j+1; k < n; k++) {
+                    // O(1)
                     if (a[i] + a[j] + a[k] == 0) {
+                        // O(1)
                         count++;
                     }
                 }
             }
         }
+        // O(1)
         return count;
     } 
 

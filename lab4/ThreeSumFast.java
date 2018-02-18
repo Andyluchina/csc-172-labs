@@ -61,10 +61,14 @@ public class ThreeSumFast {
     // Do not instantiate.
     private ThreeSumFast() { }
 
+    // O(n)
     // returns true if the sorted array a[] contains any duplicated integers
     private static boolean containsDuplicates(int[] a) {
+        // O(n)
         for (int i = 1; i < a.length; i++)
+            // O(1)
             if (a[i] == a[i-1]) return true;
+        // O(1)
         return false;
     }
 
@@ -87,6 +91,7 @@ public class ThreeSumFast {
         }
     } 
 
+    // O(2n^2 2log(n)) => O(n^2 log(n))
     /**
      * Returns the number of triples (i, j, k) with {@code i < j < k}
      * such that {@code a[i] + a[j] + a[k] == 0}.
@@ -96,16 +101,26 @@ public class ThreeSumFast {
      * such that {@code a[i] + a[j] + a[k] == 0}
      */
     public static int count(int[] a) {
+        // O(1)
         int n = a.length;
+        // O(n log(n))
         Arrays.sort(a);
+        // O(n)
         if (containsDuplicates(a)) throw new IllegalArgumentException("array contains duplicate integers");
+        // O(1)
         int count = 0;
+        // This for -> for -> if block multiplies to O(n^2 log(n))
+        // O(n)
         for (int i = 0; i < n; i++) {
+            // O(n/2) => O(n)
             for (int j = i+1; j < n; j++) {
+                // O(log(n))
                 int k = Arrays.binarySearch(a, -(a[i] + a[j]));
+                // O(1)
                 if (k > j) count++;
             }
         }
+        // O(1)
         return count;
     } 
 

@@ -58,17 +58,26 @@ public class TwoSum {
         }
     } 
 
+    // Overall running time O(n^2)
     // return number of distinct pairs (i, j) such that a[i] + a[j] = 0
     public static int count(int[] a) {
+        // O(1)
         int n = a.length;
+        // O(1)
         int count = 0;
+        // This for -> for -> if block is all O(n^2), individual values below are multiplied
+        // O(n)
         for (int i = 0; i < n; i++) {
+            // O(n/2) => O(n)
             for (int j = i+1; j < n; j++) {
+                // O(1)
                 if (a[i] + a[j] == 0) {
+                    // O(1)
                     count++;
                 }
             }
         }
+        // O(1)
         return count;
     } 
 
