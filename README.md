@@ -8,4 +8,4 @@ AJ Jordan <alex@strugee.net>
 
 ## License
 
-Creative Commons Zero 1.0
+Creative Commons Zero 1.0 except when otherwise noted
