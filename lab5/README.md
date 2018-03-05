@@ -4,12 +4,18 @@
 
 This project contains an implementation of lab 5.
 
+## Running
+
+`URList.java` and `URNode.java` are expected to be on the classpath.
+
+## Assumptions made
+
+All assumptions made are documented inline. You can grep for `Assumption:` to find them all, as they're all prefixed this way.
+
 ## Bugs
 
-* The `import` crap required me to modify `URList` and `URNode` with `package` statements
-* Nothing extends `Iterable<E>`
 * The implementation is not thread-safe
-* URArrayList `Iterable` doesn't do `remove()`
+* The `Iterable`s don't do `remove()`
 
 ## Git
 
