@@ -158,6 +158,7 @@ public class URArrayList<E> implements URList<E>, Iterable<E> {
 
 	@Override
 	// Assumption: this returns true if the object was present
+	// Assumption: only the first instance is removed
 	public boolean remove(Object o) {
 		for (int i = 0; i < size; i++) {
 			if (arr[i].equals(o)) {
