@@ -7,6 +7,9 @@ This project contains an implementation of lab 5.
 ## Bugs
 
 * The `import` crap required me to modify `URList` and `URNode` with `package` statements
+* Nothing extends `Iterable<E>`
+* The implementation is not thread-safe
+* URArrayList `Iterable` doesn't do `remove()`
 
 ## Git
 
