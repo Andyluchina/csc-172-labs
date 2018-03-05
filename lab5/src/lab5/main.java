@@ -1,26 +1,35 @@
 package lab5;
 
-import lab5.URArrayList;
+
+import lab5.URLinkedList;
 
 public class main {
 
 	public static void main(String[] args) {
-		URArrayList<String> l = new URArrayList<String>();
-		System.out.println(l.size());
+		URLinkedList<String> l = new URLinkedList<String>();
+		//System.out.println(l.size());
 		l.add("foobar");
 		l.add("hello");
 		l.add("world");
 		l.clear();
-		l.add("hello");
+		//l.add("hello");
 		l.add("foo");
 		l.add("baz");
-		l.add("world");
+		l.add(0, "hello");
 		l.add(2, "bar");
+		l.add(4, "world");
+		//System.out.println(l.size());
+		//System.out.println(l.get(2) == "bar");
+		//System.out.println(l.contains("hello"));
+		//l.add("tmp");
+		//System.out.println(l.pollFirst());
+		//System.out.println(l.pollFirst());
+		/*
 		l.subList(2, 4);
+*/
+		l.remove("foo");
 		for (String s: l) System.out.println(s);
-
-		URArrayList<String> l2 = new URArrayList<String>();
-		l2.ensureCapacity(1000);
+		URLinkedList<String> l2 = new URLinkedList<String>();
 		l2.add("hello");
 		l2.add("foo");
 		l2.add("baz");
