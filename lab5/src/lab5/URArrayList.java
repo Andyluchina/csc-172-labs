@@ -71,8 +71,10 @@ public class URArrayList<E> implements URList<E>, Iterable<E> {
 	@Override
 	// Assumption: this is supposed to always return true
 	public boolean addAll(int index, Collection<? extends E> c) {
+		int i = index;
 		for (E o: c) {
-			this.add(index, o);
+			this.add(i, o);
+			i++;
 		}
 		return true;
 	}
