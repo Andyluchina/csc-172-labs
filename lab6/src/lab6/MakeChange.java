@@ -65,7 +65,7 @@ public class MakeChange {
 		return compute(0, coins);
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println(makeChange(12));
-	}
+	}*/
 }
