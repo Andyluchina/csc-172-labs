@@ -160,6 +160,22 @@ public class EightQueen {
 		}
 	}
 
+	public static void findEightQueen() {
+		Boolean[][] board = new Boolean[8][8];
+
+		for (Boolean[] arr: board) {
+			Arrays.fill(arr, false);
+		}
+
+		for (int i = 0; i <= 7; i++) {
+			board[i][0] = true;
+		}
+
+		mutateBoard(board);
+
+		draw(board);
+	}
+
 	/*
 	public static void main(String[] args) {
 		Boolean[][] board = new Boolean[8][8];

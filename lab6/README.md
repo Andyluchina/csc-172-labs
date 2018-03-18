@@ -6,6 +6,12 @@ This project contains an implementation of lab 6.
 
 > "When in doubt, use brute force." - Ken Thompson, co-creator of the C programming language and the Unix operating system
 
+## Testcases
+
+`MakeChange` has a commented-out `main()` that was used to test the code.
+
+`EightQueen` does too, but it's not very interesting. However, commit `f511a291bc9681f6763c306afeae972e9375d54f` removes some code that was used to validate the acceptance test. You may find that of interest (you can view said commit easily on GitHub).
+
 ## Design
 
 The inline comments should be enough to give you an idea of how stuff works.
