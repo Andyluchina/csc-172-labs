@@ -137,6 +137,8 @@ public class EightQueen {
 		}
 
 		advanceQueenInRow(board[7]);
+
+		// draw(board);
 	}
 
 	private static void mutateBoard(Boolean[][] board) {
