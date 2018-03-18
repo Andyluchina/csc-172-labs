@@ -105,6 +105,7 @@ public class EightQueen {
 			if (row[i].equals(true)) {
 				row[i] = false;
 				row[i+1] = true;
+				return;
 			}
 		}
 	}
@@ -136,6 +137,7 @@ public class EightQueen {
 		}
 
 		advanceQueenInRow(board[7]);
+
 		draw(board);
 	}
 
