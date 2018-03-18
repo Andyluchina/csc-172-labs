@@ -100,11 +100,55 @@ public class EightQueen {
 		System.out.println("└─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘");
 	}
 
+	private static void findCompletedAndReset(Boolean[][] board) {
+		for (int i = 7; i >= 0; i--) {
+			if (board[i][7].equals(true)) {
+				board[i][7] = false;
+				board[i][0] = true;
+				if (board[i-1][7].equals(true)) {
+					findCompletedAndReset(board);
+				} else {
+					// Find where the queen is in the row and advance it
+					Boolean[] row = board[i-1];
+					for (int j = 0; j <= 7; j++) {
+						if (row[j].equals(true)) {
+							row[j] = false;
+							row[j+1] = true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static void mutateBoard(Boolean[][] board) {
+		/*
+		 *  Find the latest row that's been "completed" (i.e.
+		 *  the queen is at the end of the row) and reset it,
+		 *  then advance the previous row.
+		 *  
+		 *  We don't handle edge cases like the top row because
+		 *  a solution would've been found by then.
+		 */
+
+		findCompletedAndReset(board);
+
+		if (acceptanceTest(board)) {
+			return;
+		}
+
+		mutateBoard(board);
+	}
+
 	public static void main(String[] args) {
 		Boolean[][] board = new Boolean[8][8];
 
 		for (Boolean[] arr: board) {
 			Arrays.fill(arr, false);
+		}
+
+		for (int i = 0; i <= 7; i++) {
+			board[i][0] = true;
 		}
 
 		/*
@@ -117,6 +161,8 @@ public class EightQueen {
 		board[7][2] = true;
 		*/
 		// System.out.println(acceptanceTest(board));
+
+		mutateBoard(board);
 
 		draw(board);
 	}
