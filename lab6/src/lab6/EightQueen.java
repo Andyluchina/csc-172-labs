@@ -160,6 +160,7 @@ public class EightQueen {
 		}
 	}
 
+	/*
 	public static void main(String[] args) {
 		Boolean[][] board = new Boolean[8][8];
 
@@ -171,19 +172,9 @@ public class EightQueen {
 			board[i][0] = true;
 		}
 
-		/*
-		board[1][3] = true;
-		board[2][6] = true;
-		board[3][0] = true;
-		board[4][7] = true;
-		board[5][1] = true;
-		board[6][4] = true;
-		board[7][2] = true;
-		*/
-		// System.out.println(acceptanceTest(board));
-
 		mutateBoard(board);
 
 		draw(board);
 	}
+	*/
 }
