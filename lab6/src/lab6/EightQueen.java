@@ -100,44 +100,62 @@ public class EightQueen {
 		System.out.println("└─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘");
 	}
 
-	private static void findCompletedAndReset(Boolean[][] board) {
-		for (int i = 7; i >= 0; i--) {
-			if (board[i][7].equals(true)) {
-				board[i][7] = false;
-				board[i][0] = true;
-				if (board[i-1][7].equals(true)) {
-					findCompletedAndReset(board);
-				} else {
-					// Find where the queen is in the row and advance it
-					Boolean[] row = board[i-1];
-					for (int j = 0; j <= 7; j++) {
-						if (row[j].equals(true)) {
-							row[j] = false;
-							row[j+1] = true;
-						}
-					}
-				}
+	private static void advanceQueenInRow(Boolean[] row) {
+		for (int i = 0; i < 7; i++) {
+			if (row[i].equals(true)) {
+				row[i] = false;
+				row[i+1] = true;
 			}
 		}
 	}
 
-	private static void mutateBoard(Boolean[][] board) {
+	private static void findCompletedAndReset(Boolean[][] board) {
 		/*
 		 *  Find the latest row that's been "completed" (i.e.
 		 *  the queen is at the end of the row) and reset it,
 		 *  then advance the previous row.
 		 *  
-		 *  We don't handle edge cases like the top row because
-		 *  a solution would've been found by then.
+		 *  We don't handle a couple top row edge cases
+		 *  because a solution would've been found by then.
+		 */
+
+		for (int i = 7; i > 0; i--) {
+			if (board[i][7].equals(true)) {
+				board[i][7] = false;
+				board[i][0] = true;
+				if (board[i-1][7].equals(true)) {
+					findCompletedAndReset(board);
+					return;
+				} else {
+					// Find where the queen is in the row and advance it
+					Boolean[] row = board[i-1];
+					advanceQueenInRow(row);
+					return;
+				}
+			}
+		}
+
+		advanceQueenInRow(board[7]);
+		draw(board);
+	}
+
+	private static void mutateBoard(Boolean[][] board) {
+		/*
+		 * I originally wrote this recursively but had to change
+		 * to iteratively because I got a stack overflow error.
+		 * 
+		 * This would be a non-issue if Java had proper tail call
+		 * optimization and frankly I'm kind of pissed that it
+		 * doesn't.
+		 * 
+		 * 0/10, would not recommend.
 		 */
 
 		findCompletedAndReset(board);
 
-		if (acceptanceTest(board)) {
-			return;
+		while (!acceptanceTest(board)) {
+			findCompletedAndReset(board);
 		}
-
-		mutateBoard(board);
 	}
 
 	public static void main(String[] args) {
