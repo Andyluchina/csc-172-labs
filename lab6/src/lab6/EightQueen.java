@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class EightQueen {
 	private static boolean inBounds(int x, int y) {
-		if (x < 7 && x >= 0 && y < 7 && y >= 0) return true;
+		if (x <= 7 && x >= 0 && y <= 7 && y >= 0) return true;
 		return false;
 	}
 
@@ -31,7 +31,7 @@ public class EightQueen {
 
 				// Check that the column has only one queen
 				boolean queenInColumn = false;
-				for (int y = 0; y < 7; y++) {
+				for (int y = 0; y <= 7; y++) {
 					if (board[y][qx].equals(true)) {
 						if (queenInColumn) {
 							return false;
@@ -177,4 +177,5 @@ public class EightQueen {
 		draw(board);
 	}
 	*/
+
 }
