@@ -107,7 +107,7 @@ public class Lexer {
 					i++;
 				} else {
 					Token token = new Token(tokens.NUM_LITERAL);
-					token.data = num;
+					token.data = Integer.parseInt(num);
 					num = "";
 					l.add(token);
 					state = states.NORMAL;
@@ -119,7 +119,7 @@ public class Lexer {
 		// Clean up
 		if (state.equals(states.NUM)) {
 			Token token = new Token(tokens.NUM_LITERAL);
-			token.data = num;
+			token.data = Integer.parseInt(num);;
 			l.add(token);
 		}
 
@@ -129,6 +129,8 @@ public class Lexer {
 			l.add(token);
 			return l;
 		}
+
+		// TODO do more validation
 
 		l.add(new Token(tokens.EOF));
 

@@ -43,6 +43,8 @@ public class URCalculator {
 
 					continue;
 				}
+
+				Evaluator.evaluate(tokens);
 			}
 		}
 	}
