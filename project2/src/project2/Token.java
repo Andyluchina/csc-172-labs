@@ -5,9 +5,18 @@ import project2.Lexer.tokens;
 
 public class Token {
 	public String toString() {
-		return token + (data != null ? "<" +
-				(error != null ? error + ", " : "") +
-				data + ">" : "");
+		String s = "";
+		if (data != null || error != null) {
+			s += "<";
+			if (error != null) {
+				s += error + (data != null ? ", " + data : "");
+			} else {
+				s += data;
+			}
+			s += ">";
+		}
+
+		return token + s;
 	}
 
 	public Token(tokens token) {
