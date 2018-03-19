@@ -1,19 +1,13 @@
 package project2;
 
 import java.util.ArrayList;
+import project2.Token;
 
 public class Lexer {
 	// XXX i18n
-	private static String letters = "abcdefghijklmnopqrstuvwxyz";
-	private static String numbers = "1234567890";
-	private static String symbols = "()+-*/";
-
-	private class Token {
-		public tokens token;
-		public errors error;
-		// XXX make this type checked or something
-		public Object data;
-	}
+	private static final String letters = "abcdefghijklmnopqrstuvwxyz";
+	private static final String numbers = "1234567890";
+	private static final String symbols = "()+-*/";
 
 	public static enum tokens {
 			ADD,
@@ -25,7 +19,8 @@ public class Lexer {
 			PAREN_END,
 			VAR_REF,
 			NUM_LITERAL,
-			SYNTAX_ERROR
+			SYNTAX_ERROR,
+			EOF
 	}
 
 	public static enum errors {
@@ -39,8 +34,8 @@ public class Lexer {
 		NUM
 	}
 
-	public static ArrayList<tokens> tokenize(String str) {
-		ArrayList<tokens> l = new ArrayList<tokens>();
+	public static ArrayList<Token> tokenize(String str) {
+		ArrayList<Token> l = new ArrayList<Token>();
 
 		states state = states.NORMAL;
 
@@ -52,27 +47,76 @@ public class Lexer {
 		while (i < str.length()) {
 			char c = str.charAt(i);
 
-			// TODO
 			switch (state) {
 			case NORMAL:
 				if (letters.indexOf(c) != -1) {
-					Token token = new Token();
-					token.token = tokens.VAR_REF;
+					Token token = new Token(tokens.VAR_REF);
 					token.data = c;
+					l.add(token);
 					i++;
-				}
-
-				if (numbers.indexOf(c) != -1) {
+				} else if (numbers.indexOf(c) != -1) {
 					state = states.NUM;
-					num += c;
+				} else if (symbols.indexOf(c) != -1) {
+					Token token;
+					switch (c) {
+					case '(':
+						token = new Token(tokens.PAREN_START);
+						break;
+					case ')':
+						token = new Token(tokens.PAREN_END);
+						break;
+					case '+':
+						token = new Token(tokens.ADD);
+						break;
+					case '-':
+						token = new Token(tokens.SUB);
+						break;
+					case '*':
+						token = new Token(tokens.MULT);
+						break;
+					case '/':
+						token = new Token(tokens.DIV);
+						break;
+					default:
+						// This is just here to satisfy the type checker
+						token = new Token(tokens.SYNTAX_ERROR);
+						throw new Error();
+					}
+
+					l.add(token);
+					i++;
+				} else {
+					Token token = new Token(tokens.SYNTAX_ERROR);
+					token.error = errors.UNKNOWN_CHAR;
+					token.data = c;
+					l.add(token);
+					return l;
 				}
 				break;
 			case NUM:
 				if (numbers.indexOf(c) != -1) {
-					state = states.NUM;
 					num += c;
+					i++;
+				} else {
+					Token token = new Token(tokens.NUM_LITERAL);
+					token.data = num;
+					num = "";
+					l.add(token);
+					state = states.NORMAL;
 				}
+				break;
 			}
 		}
+
+		// Clean up
+		if (state.equals(states.NUM)) {
+			Token token = new Token(tokens.NUM_LITERAL);
+			token.data = num;
+			l.add(token);
+		}
+
+		l.add(new Token(tokens.EOF));
+
+		return l;
 	}
 }
