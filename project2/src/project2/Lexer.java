@@ -7,7 +7,7 @@ public class Lexer {
 	// XXX i18n
 	private static final String letters = "abcdefghijklmnopqrstuvwxyz";
 	private static final String numbers = "1234567890";
-	private static final String symbols = "()+-*/";
+	private static final String symbols = "()+-*/=";
 	private static final String whitespace = " ";
 
 	public static enum tokens {
@@ -62,9 +62,11 @@ public class Lexer {
 					switch (c) {
 					case '(':
 						token = new Token(tokens.PAREN_START);
+						parens++;
 						break;
 					case ')':
 						token = new Token(tokens.PAREN_END);
+						parens--;
 						break;
 					case '+':
 						token = new Token(tokens.ADD);
@@ -77,6 +79,9 @@ public class Lexer {
 						break;
 					case '/':
 						token = new Token(tokens.DIV);
+						break;
+					case '=':
+						token = new Token(tokens.ASSIGN);
 						break;
 					default:
 						// This is just here to satisfy the type checker
@@ -116,6 +121,13 @@ public class Lexer {
 			Token token = new Token(tokens.NUM_LITERAL);
 			token.data = num;
 			l.add(token);
+		}
+
+		if (parens != 0) {
+			Token token = new Token(tokens.SYNTAX_ERROR);
+			token.error = errors.MISMATCHED_PARENS;
+			l.add(token);
+			return l;
 		}
 
 		l.add(new Token(tokens.EOF));

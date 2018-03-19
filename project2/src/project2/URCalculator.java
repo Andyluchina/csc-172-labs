@@ -26,6 +26,15 @@ public class URCalculator {
 			default:
 				ArrayList<Token> tokens = Lexer.tokenize(line);
 				if (debug) System.out.println(tokens);
+				Token last = tokens.get(tokens.size()-1);
+				if (last.equals(Lexer.tokens.SYNTAX_ERROR)) {
+					switch(last.error) {
+					case UNKNOWN_CHAR:
+						System.out.println("SyntaxError: unexpected or invalid token " + last.data);
+					case MISMATCHED_PARENS:
+						System.out.println("SyntaxError: mismatched parenthesis");
+					}
+				}
 			}
 		}
 	}
