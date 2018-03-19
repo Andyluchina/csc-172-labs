@@ -8,6 +8,7 @@ public class Lexer {
 	private static final String letters = "abcdefghijklmnopqrstuvwxyz";
 	private static final String numbers = "1234567890";
 	private static final String symbols = "()+-*/";
+	private static final String whitespace = " ";
 
 	public static enum tokens {
 			ADD,
@@ -84,6 +85,8 @@ public class Lexer {
 					}
 
 					l.add(token);
+					i++;
+				} else if (whitespace.indexOf(c) != -1) {
 					i++;
 				} else {
 					Token token = new Token(tokens.SYNTAX_ERROR);
