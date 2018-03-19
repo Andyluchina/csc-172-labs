@@ -27,13 +27,21 @@ public class URCalculator {
 				ArrayList<Token> tokens = Lexer.tokenize(line);
 				if (debug) System.out.println(tokens);
 				Token last = tokens.get(tokens.size()-1);
-				if (last.equals(Lexer.tokens.SYNTAX_ERROR)) {
+
+				if (last.token.equals(Lexer.tokens.SYNTAX_ERROR)) {
 					switch(last.error) {
 					case UNKNOWN_CHAR:
 						System.out.println("SyntaxError: unexpected or invalid token " + last.data);
+						break;
 					case MISMATCHED_PARENS:
 						System.out.println("SyntaxError: mismatched parenthesis");
+						break;
+					case GENERIC:
+						System.out.println("SyntaxError: unknown error");
+						break;
 					}
+
+					continue;
 				}
 			}
 		}
