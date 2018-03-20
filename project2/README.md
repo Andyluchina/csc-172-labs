@@ -10,17 +10,22 @@ Run `URCalculator.java`.
 
 ## Features
 
-TODO
+* `exit` command
+* `debug enable` and `debug disable` commands to show the results of lexing
+* Helpful error messages
+* All the usual calculator stuff
+* `1(1)`-style multiplication
+* Variable manipulation with (e.g.) `a=1`, `show all`, `clear all`, and `clear varname`
+* Floating-point operations supported throughout
 
 ## Design
 
-TODO
+This is a two-phase interpreter pipeline. There's the lexer, which is responsible for parsing the string into something vaguely sensical, and the evaluator, which actually evaluates the token stream that the lexer outputs.
 
 ## Bugs
 
-* The README is incomplete
-* Variable names are only one letter
 * Doesn't support line continuations
+* `a=b=c=1` doesn't work
 
 ## Git
 

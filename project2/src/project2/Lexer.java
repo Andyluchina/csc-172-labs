@@ -154,6 +154,14 @@ public class Lexer {
 					num += c;
 					i++;
 				} else {
+					// Handle e.g. `1 + 1 1 + 1`
+					if (!l.isEmpty() && l.get(l.size()-1).token.equals(tokens.NUM_LITERAL)) {
+						Token token = new Token(tokens.SYNTAX_ERROR);
+						token.error = errors.UNEXPECTED_TOKEN;
+						token.data = str.charAt(i);
+						l.add(token);
+						return l;
+					}
 					Token token = new Token(tokens.NUM_LITERAL);
 					token.data = Double.parseDouble(num);
 					num = "";
