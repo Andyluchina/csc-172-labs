@@ -25,7 +25,7 @@ public class URCalculator {
 				break;
 			default:
 				ArrayList<Token> tokens = Lexer.tokenize(line);
-				if (debug) System.out.println(tokens);
+				if (debug) System.out.println("[DBG] Lexer: " + tokens);
 				Token last = tokens.get(tokens.size()-1);
 
 				if (last.token.equals(Lexer.tokens.SYNTAX_ERROR)) {

@@ -53,7 +53,7 @@ public class Evaluator {
 		}
 	}
 
-	public static void evaluate(ArrayList<Token> tokens) {
+	public static void evaluate(ArrayList<Token> tokens, boolean debug) {
 		Stack<Token> postfix = new Stack<Token>();
 		Stack<Token> op = new Stack<Token>();
 
@@ -97,8 +97,7 @@ public class Evaluator {
 				while (!op.empty()) {
 					postfix.push(op.pop());
 				}
-				System.out.println(postfix);
-				System.out.println(op);
+				if (debug) System.out.println("[DBG] Postfix: " + postfix);
 
 				// Reverse the postfix
 				Stack<Token> _postfix = new Stack<Token>();
