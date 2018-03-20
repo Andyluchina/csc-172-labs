@@ -44,7 +44,11 @@ public class URCalculator {
 					continue;
 				}
 
-				Evaluator.evaluate(tokens);
+				try {
+					Evaluator.evaluate(tokens, debug);
+				} catch (ArithmeticException e) {
+					System.out.println("RuntimeError: attempt to divide by zero");
+				}
 			}
 		}
 	}
