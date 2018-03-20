@@ -52,7 +52,7 @@ public class Lexer {
 			case NORMAL:
 				if (letters.indexOf(c) != -1) {
 					Token token = new Token(tokens.VAR_REF);
-					token.data = c;
+					token.data = String.valueOf(c);
 					l.add(token);
 					i++;
 				} else if (numbers.indexOf(c) != -1) {

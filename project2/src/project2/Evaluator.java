@@ -1,7 +1,10 @@
 package project2;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Stack;
+
+import project2.Lexer.tokens;
 
 public class Evaluator {
 	private static enum precedence {
@@ -56,7 +59,7 @@ public class Evaluator {
 		}
 	}
 
-	public static void evaluate(ArrayList<Token> tokens, boolean debug) {
+	public static void evaluate(ArrayList<Token> tokens, Map<String, Integer> env, boolean debug) {
 		Stack<Token> postfix = new Stack<Token>();
 		Stack<Token> op = new Stack<Token>();
 
@@ -113,38 +116,70 @@ public class Evaluator {
 				Stack<Token> backfill = new Stack<Token>();
 				while (!postfix.empty()) {
 					Token c = postfix.pop();
-					if (c.token.equals(Lexer.tokens.NUM_LITERAL)) {
+					if (c.token.equals(Lexer.tokens.NUM_LITERAL) || c.token.equals(Lexer.tokens.VAR_REF)) {
 						backfill.push(c);
 					} else {
 						assert !c.token.equals(Lexer.tokens.NUM_LITERAL);
 						Token n = new Token(Lexer.tokens.NUM_LITERAL);
 						Token b = null;
-						switch (c.token) {
-						case ADD:
-							b = backfill.pop();
-							n.data = (Integer) backfill.pop().data + (Integer) b.data;
-							break;
-						case SUB:
-							b = backfill.pop();
-							n.data = (Integer) backfill.pop().data - (Integer) b.data;
-							break;
-						case MULT:
-							b = backfill.pop();
-							n.data = (Integer) backfill.pop().data * (Integer) b.data;
-							break;
-						case DIV:
-							b = backfill.pop();
-							n.data = (Integer) backfill.pop().data / (Integer) b.data;
-							break;
+							
+						try {
+							switch (c.token) {
+							case ADD:
+								b = backfill.pop();
+								n.data = maybeLookup(backfill.pop(), env) + maybeLookup(b, env);
+								break;
+							case SUB:
+								b = backfill.pop();
+								n.data = maybeLookup(backfill.pop(), env) - maybeLookup(b, env);
+								break;
+							case MULT:
+								b = backfill.pop();
+								n.data = maybeLookup(backfill.pop(), env) * maybeLookup(b, env);
+								break;
+							case DIV:
+								b = backfill.pop();
+								n.data = maybeLookup(backfill.pop(), env) / maybeLookup(b, env);
+								break;
+							case EOF:
+								break;
+							default:
+								throw new Error();
+							}
+							backfill.push(n);
+						} catch (ReferenceError e) {
+							System.out.println("undefined variable: " + e.getVariableName());
 						}
-
-						backfill.push(n);
 					}
 				}
 				assert backfill.size() == 1;
-				System.out.println(backfill);
+				System.out.println(backfill.peek());
 				break;
 			}
+		}
+	}
+
+	public static Integer maybeLookup(Token t, Map<String, Integer> env) throws ReferenceError {
+		if (t.token == tokens.VAR_REF) {
+			String key = (String) t.data;
+			if (!(env.containsKey(key))) {
+				throw new ReferenceError(key);
+			}
+			return env.get((String) t.data);
+		}
+		return (Integer) t.data;
+	}
+	
+	public static class ReferenceError extends Exception {
+		protected final String varname;
+		
+		public ReferenceError(String varname) {
+			super(String.format("undefined variable: %s", varname));
+			this.varname = varname;
+		}
+		
+		public String getVariableName() {
+			return this.varname;
 		}
 	}
 }

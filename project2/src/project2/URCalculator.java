@@ -1,6 +1,8 @@
 package project2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class URCalculator {
@@ -9,6 +11,8 @@ public class URCalculator {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		boolean debug = true;
+
+		Map<String, Integer> vars = new HashMap<String, Integer>();
 
 		while (true) {
 			System.out.print("> ");
@@ -45,7 +49,7 @@ public class URCalculator {
 				}
 
 				try {
-					Evaluator.evaluate(tokens, debug);
+					Evaluator.evaluate(tokens, vars, debug);
 				} catch (ArithmeticException e) {
 					System.out.println("RuntimeError: attempt to divide by zero");
 				}
