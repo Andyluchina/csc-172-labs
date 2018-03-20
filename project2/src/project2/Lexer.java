@@ -30,12 +30,14 @@ public class Lexer {
 		GENERIC,
 		MISMATCHED_PARENS,
 		UNKNOWN_CHAR,
-		UNEXPECTED_TOKEN
+		UNEXPECTED_TOKEN,
+		MISSING_TOKEN
 	}
 
 	private static enum states {
 		NORMAL,
-		NUM
+		NUM,
+		VAR
 	}
 
 	public static ArrayList<Token> tokenize(String str) {
@@ -43,7 +45,8 @@ public class Lexer {
 
 		states state = states.NORMAL;
 
-		String num = "";
+		String num = "",
+				var = "";
 
 		int i = 0,
 		    parens = 0;
@@ -65,6 +68,13 @@ public class Lexer {
 			l.add(token);
 		}
 
+		if (symbols.indexOf(str.charAt(str.length()-1)) != -1) {
+			Token e = new Token(tokens.SYNTAX_ERROR);
+			e.error = errors.MISSING_TOKEN;
+			l.add(e);
+			return l;
+		}
+
 		while (i < str.length()) {
 			char c = str.charAt(i);
 
@@ -74,10 +84,7 @@ public class Lexer {
 			switch (state) {
 			case NORMAL:
 				if (letters.indexOf(c) != -1) {
-					Token token = new Token(tokens.VAR_REF);
-					token.data = String.valueOf(c);
-					l.add(token);
-					i++;
+					state = states.VAR;
 				} else if (numbers.indexOf(c) != -1) {
 					state = states.NUM;
 				} else if (symbols.indexOf(c) != -1) {
@@ -154,12 +161,29 @@ public class Lexer {
 					state = states.NORMAL;
 				}
 				break;
+			case VAR:
+				if (letters.indexOf(c) != -1) {
+					var += c;
+					i++;
+				} else {
+					Token token = new Token(tokens.VAR_REF);
+					token.data = var;
+					var = "";
+					l.add(token);
+					state = states.NORMAL;
+				}
+				break;
 			}
 		}
 		// Clean up
 		if (state.equals(states.NUM)) {
 			Token token = new Token(tokens.NUM_LITERAL);
-			token.data = Double.parseDouble(num);;
+			token.data = Double.parseDouble(num);
+			l.add(token);
+		}
+		if (state.equals(states.VAR)) {
+			Token token = new Token(tokens.VAR_REF);
+			token.data = var;
 			l.add(token);
 		}
 
@@ -169,8 +193,6 @@ public class Lexer {
 			l.add(token);
 			return l;
 		}
-
-		// TODO do more validation
 
 		l.add(new Token(tokens.EOF));
 

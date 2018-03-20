@@ -10,7 +10,7 @@ public class URCalculator {
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
-		boolean debug = true;
+		boolean debug = false;
 
 		Map<String, Double> vars = new HashMap<String, Double>();
 
@@ -64,6 +64,10 @@ public class URCalculator {
 						break;
 					case UNEXPECTED_TOKEN:
 						System.out.println("SyntaxError: unexpected token " + last.data);
+						break;
+					case MISSING_TOKEN:
+						System.out.println("SyntaxError: expected token, saw EOF");
+						break;
 					case GENERIC:
 						System.out.println("SyntaxError: unknown error");
 						break;

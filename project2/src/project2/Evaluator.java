@@ -154,6 +154,7 @@ public class Evaluator {
 							backfill.push(n);
 						} catch (ReferenceError e) {
 							System.out.println("ReferenceError: " + e.getVariableName() + " does not exist");
+							return;
 						}
 					}
 				}
@@ -162,7 +163,7 @@ public class Evaluator {
 					Double result = maybeLookup(backfill.peek(), env);
 					if (result != null) System.out.println(result);
 				} catch (ReferenceError e) {
-					System.out.println("ReferenceError: " + e.getVariableName());
+					System.out.println("ReferenceError: " + e.getVariableName() + " does not exist");
 				}
 				break;
 			}
