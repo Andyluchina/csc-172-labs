@@ -8,6 +8,8 @@ public class Lexer {
 	private static final String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final String numbers = "1234567890";
 	private static final String symbols = "()+-*/=";
+	private static final String lparens = "{[";
+	private static final String rparens = "}]";
 	private static final String whitespace = " ";
 
 	public static enum tokens {
@@ -47,6 +49,9 @@ public class Lexer {
 
 		while (i < str.length()) {
 			char c = str.charAt(i);
+
+			if (lparens.indexOf(c) != -1) c = '(';
+			if (rparens.indexOf(c) != -1) c = ')';
 
 			switch (state) {
 			case NORMAL:
