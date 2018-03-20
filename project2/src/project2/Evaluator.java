@@ -36,7 +36,10 @@ public class Evaluator {
 	}
 
 	private static void opToPostfix(Stack<Token> postfix, Stack<Token> op, Token t) {
-		while (!op.empty() && !op.peek().token.equals(Lexer.tokens.PAREN_START)) {
+		// Note that this method will never be called when higherPrecedence() would return LOWER
+		precedence p = higherPrecedence(t, op.peek()).equals(precedence.EQUAL)
+				? precedence.EQUAL : precedence.LOWER;
+		while (!op.empty() && higherPrecedence(t, op.peek()).equals(p)) {
 			postfix.push(op.pop());
 		}
 		if (!op.empty() && op.peek().token.equals(Lexer.tokens.PAREN_START)) op.pop();
@@ -46,7 +49,7 @@ public class Evaluator {
 		if (op.empty() || op.peek().token.equals(Lexer.tokens.PAREN_START)) {
 			op.add(t);
 		} else {
-			if (higherPrecedence(op.peek(), t).equals(precedence.HIGHER)) {
+			if (!higherPrecedence(op.peek(), t).equals(precedence.LOWER)) {
 				opToPostfix(postfix, op, t);
 			}
 			op.push(t);
