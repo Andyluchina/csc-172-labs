@@ -5,7 +5,7 @@ import project2.Token;
 
 public class Lexer {
 	// XXX i18n
-	private static final String letters = "abcdefghijklmnopqrstuvwxyz";
+	private static final String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final String numbers = "1234567890";
 	private static final String symbols = "()+-*/=";
 	private static final String whitespace = " ";
