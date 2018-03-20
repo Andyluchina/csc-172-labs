@@ -15,6 +15,7 @@ public class Evaluator {
 
 	// HIGHER means a is higher than b
 	private static precedence higherPrecedence(Token a, Token b) {
+		if (b.token.equals(Lexer.tokens.ASSIGN)) return precedence.LOWER;
 		// Just for implementation simplicity
 		if (a.token.equals(Lexer.tokens.PAREN_START)) return precedence.HIGHER;
 
@@ -94,7 +95,7 @@ public class Evaluator {
 				handleSymbol(postfix, op, t);
 				break;
 			case ASSIGN:
-				// TODO
+				handleSymbol(postfix, op, t);
 				break;
 			case SYNTAX_ERROR:
 				throw new Error("Received syntax error in Evaluator");
@@ -141,6 +142,10 @@ public class Evaluator {
 								b = backfill.pop();
 								n.data = maybeLookup(backfill.pop(), env) / maybeLookup(b, env);
 								break;
+							case ASSIGN:
+								b = backfill.pop();
+								env.put((String) backfill.pop().data, maybeLookup(b, env));
+								break;
 							case EOF:
 								break;
 							default:
@@ -148,12 +153,17 @@ public class Evaluator {
 							}
 							backfill.push(n);
 						} catch (ReferenceError e) {
-							System.out.println("undefined variable: " + e.getVariableName());
+							System.out.println("ReferenceError: " + e.getVariableName());
 						}
 					}
 				}
 				assert backfill.size() == 1;
-				System.out.println(backfill.peek());
+				try {
+					Integer result = maybeLookup(backfill.peek(), env);
+					if (result != null) System.out.println(result);
+				} catch (ReferenceError e) {
+					System.out.println("ReferenceError: " + e.getVariableName());
+				}
 				break;
 			}
 		}

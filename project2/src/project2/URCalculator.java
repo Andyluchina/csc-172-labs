@@ -17,6 +17,20 @@ public class URCalculator {
 		while (true) {
 			System.out.print("> ");
 			String line = scanner.nextLine().trim();
+			if (line.startsWith("clear ")) {
+				String target = line.substring(6, line.length());
+				if (target.equals("all")) {
+					vars.clear();
+				} else if (target.isEmpty()) {
+					System.out.println("SyntaxError: don't know what to clear");
+				} else {
+					if (!vars.containsKey(target)) {
+						System.out.println("ReferenceError: key " + target + " does not exist");
+					}
+					vars.remove(target);
+				}
+				continue;
+			}
 			switch (line) {
 			case "exit":
 				System.exit(0);
@@ -26,6 +40,14 @@ public class URCalculator {
 				break;
 			case "debug disable":
 				debug = false;
+				break;
+			case "show all":
+				for (Map.Entry<String, Integer> e: vars.entrySet()) {
+					System.out.println(e.getKey() + ": " + e.getValue());
+				}
+				break;
+			case "clear":
+				System.out.println("SyntaxError: don't know what to clear");
 				break;
 			default:
 				ArrayList<Token> tokens = Lexer.tokenize(line);
