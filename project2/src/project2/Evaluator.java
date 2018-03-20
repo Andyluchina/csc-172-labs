@@ -60,7 +60,7 @@ public class Evaluator {
 		}
 	}
 
-	public static void evaluate(ArrayList<Token> tokens, Map<String, Integer> env, boolean debug) {
+	public static void evaluate(ArrayList<Token> tokens, Map<String, Double> env, boolean debug) {
 		Stack<Token> postfix = new Stack<Token>();
 		Stack<Token> op = new Stack<Token>();
 
@@ -159,7 +159,7 @@ public class Evaluator {
 				}
 				assert backfill.size() == 1;
 				try {
-					Integer result = maybeLookup(backfill.peek(), env);
+					Double result = maybeLookup(backfill.peek(), env);
 					if (result != null) System.out.println(result);
 				} catch (ReferenceError e) {
 					System.out.println("ReferenceError: " + e.getVariableName());
@@ -169,7 +169,7 @@ public class Evaluator {
 		}
 	}
 
-	public static Integer maybeLookup(Token t, Map<String, Integer> env) throws ReferenceError {
+	public static Double maybeLookup(Token t, Map<String, Double> env) throws ReferenceError {
 		if (t.token == tokens.VAR_REF) {
 			String key = (String) t.data;
 			if (!(env.containsKey(key))) {
@@ -177,7 +177,7 @@ public class Evaluator {
 			}
 			return env.get((String) t.data);
 		}
-		return (Integer) t.data;
+		return (Double) t.data;
 	}
 	
 	public static class ReferenceError extends Exception {

@@ -12,7 +12,7 @@ public class URCalculator {
 		Scanner scanner = new Scanner(System.in);
 		boolean debug = true;
 
-		Map<String, Integer> vars = new HashMap<String, Integer>();
+		Map<String, Double> vars = new HashMap<String, Double>();
 
 		while (true) {
 			System.out.print("> ");
@@ -42,7 +42,7 @@ public class URCalculator {
 				debug = false;
 				break;
 			case "show all":
-				for (Map.Entry<String, Integer> e: vars.entrySet()) {
+				for (Map.Entry<String, Double> e: vars.entrySet()) {
 					System.out.println(e.getKey() + ": " + e.getValue());
 				}
 				break;
@@ -62,6 +62,8 @@ public class URCalculator {
 					case MISMATCHED_PARENS:
 						System.out.println("SyntaxError: mismatched parenthesis");
 						break;
+					case UNEXPECTED_TOKEN:
+						System.out.println("SyntaxError: unexpected token " + last.data);
 					case GENERIC:
 						System.out.println("SyntaxError: unknown error");
 						break;

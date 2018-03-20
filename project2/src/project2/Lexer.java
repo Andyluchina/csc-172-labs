@@ -6,7 +6,7 @@ import project2.Token;
 public class Lexer {
 	// XXX i18n
 	private static final String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private static final String numbers = "1234567890";
+	private static final String numbers = "1234567890.";
 	private static final String symbols = "()+-*/=";
 	private static final String lparens = "{[";
 	private static final String rparens = "}]";
@@ -29,7 +29,8 @@ public class Lexer {
 	public static enum errors {
 		GENERIC,
 		MISMATCHED_PARENS,
-		UNKNOWN_CHAR
+		UNKNOWN_CHAR,
+		UNEXPECTED_TOKEN
 	}
 
 	private static enum states {
@@ -46,6 +47,23 @@ public class Lexer {
 
 		int i = 0,
 		    parens = 0;
+
+		if (str.charAt(0) == '*'
+				|| str.charAt(0) == '/'
+				|| str.charAt(0) == '=') {
+			Token token = new Token(tokens.SYNTAX_ERROR);
+			token.error = errors.UNEXPECTED_TOKEN;
+			token.data = str.charAt(0);
+			l.add(token);
+			return l;
+		}
+
+		if (str.charAt(0) == '-'
+				|| str.charAt(0) == '+') {
+			Token token = new Token(tokens.NUM_LITERAL);
+			token.data = 0;
+			l.add(token);
+		}
 
 		while (i < str.length()) {
 			char c = str.charAt(i);
@@ -66,6 +84,11 @@ public class Lexer {
 					Token token;
 					switch (c) {
 					case '(':
+						if (!l.isEmpty()
+								&& (l.get(l.size()-1).token.equals(tokens.NUM_LITERAL)
+								    || l.get(l.size()-1).token.equals(tokens.VAR_REF))) {
+							l.add(new Token(tokens.MULT));
+						}
 						token = new Token(tokens.PAREN_START);
 						parens++;
 						break;
@@ -74,9 +97,22 @@ public class Lexer {
 						parens--;
 						break;
 					case '+':
+						if (!l.isEmpty() && l.get(l.size()-1).token.equals(tokens.ADD)) {
+							l.remove(l.size()-1);
+						}
 						token = new Token(tokens.ADD);
 						break;
 					case '-':
+						if (!l.isEmpty()) {
+							if (l.get(l.size()-1).token.equals(tokens.ADD)) {
+								l.remove(l.size()-1);
+							} else if (l.get(l.size()-1).token.equals(tokens.SUB)) {
+								l.remove(l.size()-1);
+								l.add(new Token(tokens.ADD));
+								i++;
+								continue;
+							}
+						}
 						token = new Token(tokens.SUB);
 						break;
 					case '*':
@@ -112,7 +148,7 @@ public class Lexer {
 					i++;
 				} else {
 					Token token = new Token(tokens.NUM_LITERAL);
-					token.data = Integer.parseInt(num);
+					token.data = Double.parseDouble(num);
 					num = "";
 					l.add(token);
 					state = states.NORMAL;
@@ -120,11 +156,10 @@ public class Lexer {
 				break;
 			}
 		}
-
 		// Clean up
 		if (state.equals(states.NUM)) {
 			Token token = new Token(tokens.NUM_LITERAL);
-			token.data = Integer.parseInt(num);;
+			token.data = Double.parseDouble(num);;
 			l.add(token);
 		}
 
