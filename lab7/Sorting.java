@@ -25,75 +25,142 @@ import java.util.Random;
 public class Sorting {
 
 
- /**
-     * 
-     * Sorts the numbers present in the file based on the algorithm provided.
-     * 0 = Arrays.sort() (Java Default)
-     * 1 = Bubble Sort
-     * 2 = Selection Sort 
-     * 3 = Insertion Sort 
-     * 4 = Mergesort
-     * 5 = Quicksort
-     *
-     * @param args the command-line arguments
-     */
-    public static void main(String[] args)  { 
-        In in = new In(args[0]);
-        
-		  // Storing file input in an array
-        int[] a = in.readAllInts();
+	/**
+	 * 
+	 * Sorts the numbers present in the file based on the algorithm provided.
+	 * 0 = Arrays.sort() (Java Default)
+	 * 1 = Bubble Sort
+	 * 2 = Selection Sort 
+	 * 3 = Insertion Sort 
+	 * 4 = Mergesort
+	 * 5 = Quicksort
+	 *
+	 * @param args the command-line arguments
+	 */
+	public static void main(String[] args)  { 
+		In in = new In(args[0]);
 
-	int[] b = a.clone();
-	Arrays.sort(b);
+		// Storing file input in an array
+		int[] a = in.readAllInts();
 
-	int[] c = b.clone();
-	// https://stackoverflow.com/a/2137791/1198896
-	for (int i = 0; i < c.length / 2; i++) {
-		int tmp = c[i];
-		c[i] = c[c.length - i - 1];
-		c[c.length - i - 1] = tmp;
-	}
+		int[] b = a.clone();
+		Arrays.sort(b);
 
-	int[] d = b.clone();
-	Random r = new Random();
-	for (int i = d.length / 10; i > 0; i--) {
-		int idx = r.nextInt(d.length),
-		    idx2 = r.nextInt(d.length),
-		    tmp = d[idx];
-		d[idx] = d[idx2];
-		d[idx2] = tmp;
-	}
-	// So it gets GC'd
-	r = null;
+		int[] c = b.clone();
+		// https://stackoverflow.com/a/2137791/1198896
+		for (int i = 0; i < c.length / 2; i++) {
+			int tmp = c[i];
+			c[i] = c[c.length - i - 1];
+			c[c.length - i - 1] = tmp;
+		}
 
-        //TODO: 
-        // Read the second argument and based on input select the sorting algorithm
-        //  * 0 = Arrays.sort() (Java Default)
-        //  * 1 = Bubble Sort
-        //  * 2 = Selection Sort 
-        //  * 3 = Insertion Sort 
-        //  * 4 = Mergesort
-        //  * 5 = Quicksort
-        //  Perform sorting on a,b,c,d. Pring runtime for each case along with timestamp and record those. 
-        // For runtime and priting, you can use the same code from Lab 4 as follows:
-        
-         // TODO: For each array, a, b, c, d:  
-        Stopwatch timer = new Stopwatch();
-        // TODO: Perform Sorting and store the result in an  array
+		int[] d = b.clone();
+		Random r = new Random();
+		for (int i = d.length / 10; i > 0; i--) {
+			int idx = r.nextInt(d.length),
+					idx2 = r.nextInt(d.length),
+					tmp = d[idx];
+			d[idx] = d[idx2];
+			d[idx2] = tmp;
+		}
+		// So it gets GC'd
+		r = null;
 
-        double time = timer.elapsedTimeMillis();
-        
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-          //TODO: Replace with your own netid
-        String netID = "ajord17";
-          //TODO: Replace with the algorithm used 
-        String algorithmUsed = "insertion sort";
-          //TODO: Replace with the  array used 
-        String arrayUsed = "a";
-          StdOut.printf("%s %s %8.1f   %s  %s  %s\n", algorithmUsed, arrayUsed, time, timeStamp, netID, args[0]);
-          // Write the resultant array to a file (Each time you run a program 4 output files should be generated. (one for each a,b,c, and d)
-		
-  } 
+		String algorithmUsed;
+		switch (args[2]) {
+		case "0":
+			algorithmUsed = "Arrays.sort()";
+			break;
+		case "1":
+			algorithmUsed = "bubble sort";
+			break;
+		case "2":
+			algorithmUsed = "selection sort";
+			break;
+		case "3":
+			algorithmUsed = "insertion sort";
+			break;
+		case "4":
+			algorithmUsed = "mergesort";
+			break;
+		case "5":
+			algorithmUsed = "quicksort";
+			break;
+		default:
+			algorithmUsed = "unknown";
+		}
+
+
+		String arrayUsed = null;
+		for (int i = 0; i < 4; i++) {
+			int[] arr = null;
+			switch (i) {
+			case 0:
+				arr = a;
+				arrayUsed = "a";
+			case 1:
+				arr = b;
+				arrayUsed = "b";
+			case 2:
+				arr = c;
+				arrayUsed = "c";
+			case 3:
+				arr = d;
+				arrayUsed = "d";
+			}
+
+			Stopwatch timer = new Stopwatch();
+
+			switch (algorithmUsed) {
+			case "Arrays.sort()":
+				Arrays.sort(arr);
+				break;
+			case "bubble sort":
+				// XXX test
+				boolean finished = false;
+				while (!finished) {
+					finished = true;
+					for (i = 0; i < arr.length - 1; i++) {
+						if (arr[i] > arr[i+1]) {
+							int tmp = arr[i+1];
+							arr[i+1] = arr[i];
+							arr[i] = tmp;
+							finished = false;
+						}
+					}
+				}
+			case "selection sort":
+				// lower is lower bound
+				for (int lower = 0; lower < arr.length; lower++) {
+					int lowest = arr[lower],
+						lowestIdx = lower;
+					for (i = lower; i < arr.length; i++) {
+						if (lowest > arr[i]) {
+							lowest = arr[i];
+							lowestIdx = i;
+						}
+					}
+
+					// TODO
+				}
+			case "insertion sort":
+				// TODO
+			case "mergesort":
+				// TODO
+			case "quicksort":
+				// TODO
+			}
+
+			double time = timer.elapsedTimeMillis();
+			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+			String netID = "ajord17";
+			StdOut.printf("%s %s %8.1f   %s  %s  %s\n", algorithmUsed, arrayUsed, time, timeStamp, netID, args[0]);
+			// Write the resultant array to a file (Each time you run a program 4 output files should be generated. (one for each a,b,c, and d)
+		}
+
+
+
+	} 
 } 
 
 
