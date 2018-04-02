@@ -21,9 +21,59 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Arrays;
 import java.util.Random;
+import java.io.PrintWriter;
 
 public class Sorting {
 
+	public static final void swap(int[] arr, int a, int b) {
+		int tmp = arr[b];
+		arr[b] = arr[a];
+		arr[a] = tmp;
+	}
+
+	// Source: slides
+	public static void MergeSort(int[] arr) {
+		if (arr.length <= 1) return;
+
+		int[] left = new int[arr.length/2];
+		int[] right = new int[arr.length - arr.length/2];
+		System.arraycopy(arr, 0, left, 0, arr.length/2);
+		System.arraycopy(arr, arr.length/2, right, 0, arr.length-arr.length/2);
+		MergeSort(left);
+		MergeSort(right);
+
+		// Merge
+		int i = 0, j = 0, k = 0;
+		while (i < left.length && j < right.length) {
+			if (left[i] < right[j]) {
+				arr[k++] = left[i++];
+			} else {
+				arr[k++] = right[j++];
+			}
+		}
+
+		while (i < left.length) arr[k++] = left[i++];
+		while (j < right.length) arr[k++] = right[j++];
+	}
+
+	// Source: slides
+	public static void recursive_qs(int[] arr, int left, int right) {
+		if (right <= left) return;
+
+		// partition,
+		int i = left - 1, j = right;
+		while (true) {
+			while (arr[++i] <= arr[right]) if (i == right) break;
+			while (arr[--j] >= arr[right])
+				if (j == left || j == i) break;
+			if (j <= i) break;
+			swap(arr, i, j);
+		}
+		if (i < right) swap(arr, i, right);
+		// recursively sort the left & the right parts
+		recursive_qs(arr, left, i-1);
+		recursive_qs(arr, i+1, right);
+	}
 
 	/**
 	 * 
@@ -37,7 +87,7 @@ public class Sorting {
 	 *
 	 * @param args the command-line arguments
 	 */
-	public static void main(String[] args)  { 
+	public static void main(String[] args) throws java.io.FileNotFoundException { 
 		In in = new In(args[0]);
 
 		// Storing file input in an array
@@ -67,7 +117,7 @@ public class Sorting {
 		r = null;
 
 		String algorithmUsed;
-		switch (args[2]) {
+		switch (args[1]) {
 		case "0":
 			algorithmUsed = "Arrays.sort()";
 			break;
@@ -92,21 +142,25 @@ public class Sorting {
 
 
 		String arrayUsed = null;
-		for (int i = 0; i < 4; i++) {
+		for (int _i = 0; _i < 4; _i++) {
 			int[] arr = null;
-			switch (i) {
+			switch (_i) {
 			case 0:
 				arr = a;
 				arrayUsed = "a";
+				break;
 			case 1:
 				arr = b;
 				arrayUsed = "b";
+				break;
 			case 2:
 				arr = c;
 				arrayUsed = "c";
+				break;
 			case 3:
 				arr = d;
 				arrayUsed = "d";
+				break;
 			}
 
 			Stopwatch timer = new Stopwatch();
@@ -120,7 +174,7 @@ public class Sorting {
 				boolean finished = false;
 				while (!finished) {
 					finished = true;
-					for (i = 0; i < arr.length - 1; i++) {
+					for (int i = 0; i < arr.length - 1; i++) {
 						if (arr[i] > arr[i+1]) {
 							int tmp = arr[i+1];
 							arr[i+1] = arr[i];
@@ -129,37 +183,51 @@ public class Sorting {
 						}
 					}
 				}
+				break;
 			case "selection sort":
-				// lower is lower bound
-				for (int lower = 0; lower < arr.length; lower++) {
-					int lowest = arr[lower],
-						lowestIdx = lower;
-					for (i = lower; i < arr.length; i++) {
-						if (lowest > arr[i]) {
-							lowest = arr[i];
-							lowestIdx = i;
-						}
+				// Source: slides
+				int j, k;
+				for (int i = 0; i < arr.length - 1; i++) {
+					j = i;
+					for (k = i+1; k < arr.length; k++) {
+						if (arr[k] < arr[j]) j=k;
 					}
-
-					// TODO
+					if (j != i) swap(arr, i, j);
 				}
+				break;
 			case "insertion sort":
-				// TODO
+				// Source: slides
+				int temp;
+				for (int i = 1; i < arr.length; i++) {
+					temp = arr[i];
+					j = i - 1;
+					while (j >= 0 && arr[j] > temp) {
+						arr[j+1] = arr[j];
+						j--;
+					}
+					arr[j+1] = temp;
+				}
+				break;
 			case "mergesort":
-				// TODO
+				MergeSort(arr);
+				break;
 			case "quicksort":
-				// TODO
+				recursive_qs(arr, 0, arr.length - 1);
+				break;
 			}
 
 			double time = timer.elapsedTimeMillis();
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 			String netID = "ajord17";
 			StdOut.printf("%s %s %8.1f   %s  %s  %s\n", algorithmUsed, arrayUsed, time, timeStamp, netID, args[0]);
-			// Write the resultant array to a file (Each time you run a program 4 output files should be generated. (one for each a,b,c, and d)
+
+			// https://stackoverflow.com/a/2885224/1198896
+			PrintWriter writer = new PrintWriter(arrayUsed + ".txt");
+			for (int num: arr) {
+				writer.println(num);
+			}
+			writer.close();
 		}
-
-
-
 	} 
 } 
 
