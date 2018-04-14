@@ -2,6 +2,7 @@ package HuffmanSubmit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -94,7 +95,11 @@ public class HuffmanSubmit implements Huffman {
 		// Write freq file
 		for (Entry<Byte, Integer> e: freq.entrySet()) {
 			// TODO this should be 8 digit bit representation
-			freqOut.write(e.getKey());
+			byte[] arr = {e.getKey()};
+			BitSet bitset = BitSet.valueOf(arr);
+			for (int i = 0; i < 8; i++) {
+				freqOut.write(bitset.get(i) ? '1' : '0');
+			}
 			freqOut.write(':');
 			freqOut.write(e.getValue().toString());
 			freqOut.write('\n');
@@ -105,7 +110,7 @@ public class HuffmanSubmit implements Huffman {
 
 
    public void decode(String inputFile, String outputFile, String freqFile){
-		// TODO: Your code here
+	   // TODO
    }
 
 
