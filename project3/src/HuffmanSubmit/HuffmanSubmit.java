@@ -13,14 +13,21 @@ import HuffmanSubmit.BinaryOut;
 
 public class HuffmanSubmit implements Huffman {
 
-	public class Node {
-		public Node(Byte b) {
+	public class Node implements Comparable<Node> {
+		public Node(Byte b, int freq) {
 			this.val = b;
+			this.cumulFreq = freq;
 		}
 
-		public Node(Byte b, Node right) {
-			this.left = new Node(b);
+		public Node(Byte b, int freq, Node right) {
+			this.left = new Node(b, freq);
 			this.right = right;
+		}
+
+		public Node(Node a, Node b) {
+			this.left = a;
+			this.right = b;
+			this.cumulFreq = a.cumulFreq + b.cumulFreq;
 		}
 
 		private void annotatePrefixCodes(HashMap<Byte, boolean[]> prefixCodes, boolean[] pcode, boolean _left) {
@@ -46,23 +53,40 @@ public class HuffmanSubmit implements Huffman {
 		Node left;
 		Node right;
 		Byte val;
+		int cumulFreq;
 		boolean[] prefixCode;
+
+		@Override
+		public int compareTo(Node arg0) {
+			if (this.cumulFreq == arg0.cumulFreq) return 0;
+			if (this.cumulFreq < arg0.cumulFreq) return -1;
+			return 1;
+		}
 	}
 
 	public Node treeFromFreqMap(HashMap<Byte, Integer> freq) {
 		ArrayList<Entry<Byte, Integer>> freqEntries = new ArrayList<Entry<Byte, Integer>>();
 		freqEntries.addAll(freq.entrySet());
-		Collections.sort(freqEntries, Entry.comparingByValue());
-		Node htree = null;
-		// XXX produce flatter trees
+		ArrayList<Node> trees = new ArrayList<Node>();
+
+		// Turn all entries into tree leafs
 		for (Entry<Byte, Integer> e: freqEntries) {
-			if (htree == null) {
-				htree = new Node(e.getKey());
-			} else {
-				htree = new Node(e.getKey(), htree);
-			}
+			Node n = new Node(e.getKey(), e.getValue());
+			trees.add(n);
 		}
-		return htree;
+
+		Collections.sort(trees);
+
+		while (trees.size() > 1) {
+			Node t1 = trees.get(0);
+			Node t2 = trees.get(1);
+			trees.add(new Node(t1, t2));
+			trees.remove(t1);
+			trees.remove(t2);
+			Collections.sort(trees);
+		}
+
+		return trees.get(0);
 	}
 
 	public void encode(String inputFile, String outputFile, String freqFile){
@@ -139,6 +163,7 @@ public class HuffmanSubmit implements Huffman {
 			} else {
 				if (c == '\n') {
 					handlingFreq = false;
+					// Reconstruct the character byte
 					BitSet bitset = new BitSet(8);
 					for (int i = 0; i < 8; i++) {
 						if (characterData.charAt(i) == '1') {
@@ -168,6 +193,7 @@ public class HuffmanSubmit implements Huffman {
 
 		HashMap<Byte, boolean[]> _prefixCodes = new HashMap<Byte, boolean[]>();
 		htree.annotatePrefixCodes(_prefixCodes);
+
 		// Switch keys and values
 		// XXX just do it right the first time
 		HashMap<Boolean[], Byte> prefixCodes = new HashMap<Boolean[], Byte>();
@@ -190,13 +216,14 @@ public class HuffmanSubmit implements Huffman {
 			bits.add(bit);
 			boolean foundKey = false;
 			Boolean[] keyWeFound = null;
+			Boolean[] cmp = new Boolean[bits.size()];
 			// Can't use HashMap#contains because it uses object id, not value
+			// Java didn't like a Boolean[] cast so here we fuckin go
+			for (int i = 0; i < cmp.length; i++) {
+				cmp[i] = bits.get(i);
+			}
 			for (Boolean[] key: prefixCodes.keySet()) {
-				// Java didn't like a Boolean[] cast so here we fuckin go
-				Boolean[] cmp = new Boolean[bits.size()];
-				for (int i = 0; i < cmp.length; i++) {
-					cmp[i] = bits.get(i);
-				}
+				if (key.length != cmp.length) continue;
 				if (Arrays.equals(key, cmp)) {
 					foundKey = true;
 					// The entire premise of this variable is ridiculous
